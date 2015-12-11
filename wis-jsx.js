@@ -389,12 +389,12 @@ var PanelsBox = React.createClass( {
 		return (
 			<div>
 				<div className="panel-group" id="vus-panels" role="tablist" aria-multiselectable="true">
-					<PanelBox endpoint="/wis/v1/reports" />
-					<PanelBox endpoint="/wis/v1/radar" />
-					<PanelBox endpoint="/wis/v1/satellite" />
-					<PanelBox endpoint="/wis/v1/lightning" />
-					<PanelBox endpoint="/wis/v1/weather" />
-					<PanelBox endpoint="/wis/v1/forecast" />
+					<PanelBox endpoint="wis/v1/reports" />
+					<PanelBox endpoint="wis/v1/radar" />
+					<PanelBox endpoint="wis/v1/satellite" />
+					<PanelBox endpoint="wis/v1/lightning" />
+					<PanelBox endpoint="wis/v1/weather" />
+					<PanelBox endpoint="wis/v1/forecast" />
 				</div>
 			</div>
 		);
