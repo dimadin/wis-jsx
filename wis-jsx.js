@@ -331,7 +331,7 @@ var ReportButton = React.createClass( {
 	handleReportSubmit: function( report ) {
 		jQuery.ajax( {
 			method: 'POST',
-			url: wisData.EndpointBase + '/wis/v1/reports',
+			url: wisData.EndpointBase + 'wis/v1/reports',
 			dataType: 'json',
 			cache: false,
 			crossDomain: true,
