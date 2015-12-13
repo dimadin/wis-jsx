@@ -1,7 +1,7 @@
 /**
- * Setup options.
+ * Use options that are set outside.
  */
-var wisData = wisJSX || { "EndpointBase": "https://vreme.milandinic.com/wp-json" };
+var wisData = wisJSX;
 
 /**
  * Report submission event holder.
