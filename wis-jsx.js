@@ -25,6 +25,7 @@ var PanelBox = React.createClass( {
 			dataType: 'json',
 			cache: false,
 			crossDomain: true,
+			data: { width: jQuery( window ).width() },
 			success: function( data ) {
 				this.setState( { loading: false } );
 				this.setState( { data: data } );
