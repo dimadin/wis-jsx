@@ -4,6 +4,11 @@
 var wisData = wisJSX;
 
 /**
+ * Set Router variables.
+ */
+var { Router, Route, IndexRoute, Link, browserHistory } = ReactRouter;
+
+/**
  * Report submission event holder.
  */
 var ReportFormSumission = {};
@@ -380,22 +385,108 @@ var LoadingBox = React.createClass( {
 } );
 
 /**
- * Container of everything.
+ * Index content.
  *
  * Load separate boxes by passing
  * their API endpoint.
  */
-var PanelsBox = React.createClass( {
+var IndexContent = React.createClass( {
 	render: function() {
 		return (
 			<div>
-				<div className="panel-group" id="vus-panels" role="tablist" aria-multiselectable="true">
-					<PanelBox endpoint="wis/v1/reports" />
-					<PanelBox endpoint="wis/v1/radar" />
-					<PanelBox endpoint="wis/v1/satellite" />
-					<PanelBox endpoint="wis/v1/lightning" />
-					<PanelBox endpoint="wis/v1/weather" />
-					<PanelBox endpoint="wis/v1/forecast" />
+				<PanelBox endpoint="wis/v1/reports" />
+				<PanelBox endpoint="wis/v1/weather" />
+			</div>
+		);
+	}
+} );
+
+/**
+ * Radar content.
+ *
+ * Load separate box by passing
+ * its API endpoint.
+ */
+var RadarContent = React.createClass( {
+	render: function() {
+		return (
+			<div>
+				<PanelBox endpoint="wis/v1/radar" />
+			</div>
+		);
+	}
+} );
+
+/**
+ * Satellite content.
+ *
+ * Load separate box by passing
+ * its API endpoint.
+ */
+var SatelliteContent = React.createClass( {
+	render: function() {
+		return (
+			<div>
+				<PanelBox endpoint="wis/v1/satellite" />
+			</div>
+		);
+	}
+} );
+
+/**
+ * Lightning content.
+ *
+ * Load separate box by passing
+ * its API endpoint.
+ */
+var LightningContent = React.createClass( {
+	render: function() {
+		return (
+			<div>
+				<PanelBox endpoint="wis/v1/lightning" />
+			</div>
+		);
+	}
+} );
+
+/**
+ * Forecast content.
+ *
+ * Load separate box by passing
+ * its API endpoint.
+ */
+var ForecastContent = React.createClass( {
+	render: function() {
+		return (
+			<div>
+				<PanelBox endpoint="wis/v1/forecast" />
+			</div>
+		);
+	}
+} );
+
+/**
+ * Main Screen.
+ */
+var MainScreen = React.createClass( {
+	render: function() {
+		return (
+			<div>
+				<nav className="navbar navbar-default">
+					<div className="container-fluid">
+						<div className="collapse navbar-collapse">
+							<ul className="nav navbar-nav">
+								<li><Link to="/">Стање</Link></li>
+								<li><Link to="/radar">Радар</Link></li>
+								<li><Link to="/satellite">Сателит</Link></li>
+								<li><Link to="/lightning">Муње</Link></li>
+								<li><Link to="/forecast">Прогноза</Link></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+				<div>
+					{this.props.children}
 				</div>
 			</div>
 		);
@@ -405,7 +496,14 @@ var PanelsBox = React.createClass( {
 /**
  * Start rendering content.
  */
-ReactDOM.render(
-	<PanelsBox />,
-	document.getElementById( 'wis-content' )
-);
+ReactDOM.render( (
+	<Router history={browserHistory}>
+		<Route path="/" component={MainScreen}>
+			<IndexRoute component={IndexContent} />
+			<Route path="/radar" component={RadarContent} />
+			<Route path="/satellite" component={SatelliteContent} />
+			<Route path="/lightning" component={LightningContent} />
+			<Route path="/forecast" component={ForecastContent} />
+		</Route>
+	</Router>
+), document.getElementById( 'wis-content' ) );
