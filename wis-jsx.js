@@ -477,10 +477,10 @@ var MainScreen = React.createClass( {
 						<div className="collapse navbar-collapse">
 							<ul className="nav navbar-nav">
 								<li><Link to="/">Стање</Link></li>
-								<li><Link to="/radar">Радар</Link></li>
-								<li><Link to="/satellite">Сателит</Link></li>
-								<li><Link to="/lightning">Муње</Link></li>
-								<li><Link to="/forecast">Прогноза</Link></li>
+								<li><Link to="/radar/">Радар</Link></li>
+								<li><Link to="/satellite/">Сателит</Link></li>
+								<li><Link to="/lightning/">Муње</Link></li>
+								<li><Link to="/forecast/">Прогноза</Link></li>
 							</ul>
 						</div>
 					</div>
@@ -500,10 +500,10 @@ ReactDOM.render( (
 	<Router history={browserHistory}>
 		<Route path="/" component={MainScreen}>
 			<IndexRoute component={IndexContent} />
-			<Route path="/radar" component={RadarContent} />
-			<Route path="/satellite" component={SatelliteContent} />
-			<Route path="/lightning" component={LightningContent} />
-			<Route path="/forecast" component={ForecastContent} />
+			<Route path="/radar/" component={RadarContent} />
+			<Route path="/satellite/" component={SatelliteContent} />
+			<Route path="/lightning/" component={LightningContent} />
+			<Route path="/forecast/" component={ForecastContent} />
 		</Route>
 	</Router>
 ), document.getElementById( 'wis-content' ) );
