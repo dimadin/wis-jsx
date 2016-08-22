@@ -43,39 +43,71 @@ var PanelBox = React.createClass( {
 	componentWillMount: function() {
 		this.loadDataFromServer();
 	},
+	panel: function() {
+		if ( true != this.state.loading ) {
+			return (
+				<div className="panel panel-default">
+					{this.panelHeading()}
+					{this.panelBody()}
+				</div>
+			);
+		}
+	},
+	panelHeading: function() {
+		if ( true != this.state.loading ) {
+			var headingName = 'vus-' + this.state.data.id + '-heading';
+
+			return (
+				<div className="panel-heading">
+					<h3 id={headingName} className="panel-title">
+						{this.state.data.name}
+					</h3>
+				</div>
+			);
+		}
+	},
+	panelBody: function() {
+		if ( true != this.state.loading ) {
+			if ( 'thumbnails' != this.state.data.type ) {
+				return <PanelBodyBox data={this.state.data} />;
+			}
+		}
+	},
+	render: function() {
+		return (
+			<div>
+				{ this.state.loading ? <LoadingBox /> : null }
+				<div className="container">
+					<div className="row">
+						<div className="col-xs-12">
+							{this.panel()}
+						</div>
+					</div>
+				</div>
+				{ 'thumbnails' == this.state.data.type ? <ThumbnailsBox data={this.state.data.thumbnails} /> : null }
+			</div>
+		);
+	}
+} );
+
+var PanelBodyBox = React.createClass( {
 	panelBody: function() {
 		// Display different content based on type
-		if ( 'thumbnails' == this.state.data.type ) {
-			return <ThumbnailsBox data={this.state.data.thumbnails} />;
-		} else if ( 'weather' == this.state.data.type ) {
-			return <WeatherBox data={this.state.data.cities} />;
-		} else if ( 'forecast' == this.state.data.type ) {
-			return <ForecastsBox data={this.state.data.forecasts} />;
-		} else if ( 'report' == this.state.data.type ) {
-			return <ReportsBox data={this.state.data.reports} />;
-		} else if ( 'reporting' == this.state.data.type ) {
+		if ( 'weather' == this.props.data.type ) {
+			return <WeatherBox data={this.props.data.cities} />;
+		} else if ( 'forecast' == this.props.data.type ) {
+			return <ForecastsBox data={this.props.data.forecasts} />;
+		} else if ( 'report' == this.props.data.type ) {
+			return <ReportsBox data={this.props.data.reports} />;
+		} else if ( 'reporting' == this.props.data.type ) {
 			return <ReportButton />;
 		}
 	},
 	render: function() {
-		var headingName = 'vus-' + this.state.data.id + '-heading';
-		var collapsedName = 'vus-' + this.state.data.id + '-collapsed';
-		var collapsedLink = '#' + collapsedName;
-
 		return (
-			<div className="panel panel-default">
-				<div className="panel-heading" role="tab" id={headingName}>
-					<h4 className="panel-title">
-						<a role="button" data-toggle="collapse" data-parent="#vus-panels" href={collapsedLink} aria-expanded="true" aria-controls={collapsedName}>
-							{this.state.data.name}
-						</a>
-					</h4>
-				</div>
-				<div id={collapsedName} className="panel-collapse collapse in" role="tabpanel" aria-labelledby={headingName}>
-					<div className="panel-body">
-						{ this.state.loading ? <LoadingBox /> : null }
-						{this.panelBody()}
-					</div>
+			<div className="panel-collapse collapse in">
+				<div className="panel-body">
+					{this.panelBody()}
 				</div>
 			</div>
 		);
@@ -101,13 +133,21 @@ var ThumbnailsBox = React.createClass( {
 var ThumbnailBox = React.createClass( {
 	render: function() {
 		return (
-			<div className="thumbnail">
-				<div className="caption">
-					<h4>{this.props.data.title}</h4>
+			<div>
+				<div className="container">
+					<div className="row">
+						<div className="col-xs-12">
+							<h4 className="text-uppercase">{this.props.data.title}</h4>
+						</div>
+					</div>
 				</div>
-				<img src={this.props.data.image} />
-				<div className="caption">
-					<p>{this.props.data.caption}</p>
+				<img className="img-responsive center-block" src={this.props.data.image} />
+				<div className="container">
+					<div className="row">
+						<div className="col-xs-12">
+							<p><b>{this.props.data.caption}</b></p>
+						</div>
+					</div>
 				</div>
 			</div>
 		);
@@ -375,9 +415,15 @@ var LoadingBox = React.createClass( {
 		};
 
 		return (
-			<div className="text-center">
-				<div className="progress">
-					<div className="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={style}></div>
+			<div className="container">
+				<div className="row">
+					<div className="col-xs-12">
+						<div className="text-center">
+							<div className="progress">
+								<div className="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={style}></div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		);
@@ -471,22 +517,30 @@ var ForecastContent = React.createClass( {
 var MainScreen = React.createClass( {
 	render: function() {
 		return (
-			<div>
-				<nav className="navbar navbar-default">
-					<div className="container-fluid">
-						<div className="collapse navbar-collapse">
-							<ul className="nav navbar-nav">
-								<li><Link to="/">Стање</Link></li>
-								<li><Link to="/radar/">Радар</Link></li>
-								<li><Link to="/satellite/">Сателит</Link></li>
-								<li><Link to="/lightning/">Муње</Link></li>
-								<li><Link to="/forecast/">Прогноза</Link></li>
-							</ul>
+			<div id="container">
+				<div id="content">
+					<div className="container">
+						<div className="row">
+							<div className="col-xs-12">
+								<nav className="navbar navbar-default">
+									<div className="container-fluid">
+										<div className="collapse navbar-collapse">
+											<ul className="nav navbar-nav">
+												<li><Link to="/">Стање</Link></li>
+												<li><Link to="/radar/">Радар</Link></li>
+												<li><Link to="/satellite/">Сателит</Link></li>
+												<li><Link to="/lightning/">Муње</Link></li>
+												<li><Link to="/forecast/">Прогноза</Link></li>
+											</ul>
+										</div>
+									</div>
+								</nav>
+							</div>
 						</div>
 					</div>
-				</nav>
-				<div>
-					{this.props.children}
+					<div>
+						{this.props.children}
+					</div>
 				</div>
 			</div>
 		);
