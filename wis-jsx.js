@@ -496,6 +496,22 @@ var LightningContent = React.createClass( {
 } );
 
 /**
+ * Аnimated content.
+ *
+ * Load separate box by passing
+ * its API endpoint.
+ */
+var АnimatedContent = React.createClass( {
+	render: function() {
+		return (
+			<div>
+				<PanelBox endpoint="wis/v2/animated" />
+			</div>
+		);
+	}
+} );
+
+/**
  * Forecast content.
  *
  * Load separate box by passing
@@ -530,6 +546,7 @@ var MainScreen = React.createClass( {
 												<li><Link to="/radar/">Радар</Link></li>
 												<li><Link to="/satellite/">Сателит</Link></li>
 												<li><Link to="/lightning/">Муње</Link></li>
+												<li><Link to="/animated/">Анимације</Link></li>
 												<li><Link to="/forecast/">Прогноза</Link></li>
 											</ul>
 										</div>
@@ -557,6 +574,7 @@ ReactDOM.render( (
 			<Route path="/radar/" component={RadarContent} />
 			<Route path="/satellite/" component={SatelliteContent} />
 			<Route path="/lightning/" component={LightningContent} />
+			<Route path="/animated/" component={АnimatedContent} />
 			<Route path="/forecast/" component={ForecastContent} />
 		</Route>
 	</Router>
